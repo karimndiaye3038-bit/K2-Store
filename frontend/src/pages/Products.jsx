@@ -14,13 +14,24 @@ import { useCart } from "../context/CartContext";
 const getImageUrl = (image) => {
   if (!image) return "/placeholder-product.jpg";
 
-  if (image.startsWith("http://") || image.startsWith("https://")) {
-    return image;
-  }
- const baseUrl =
+  const baseUrl =
     import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
   const serverUrl = baseUrl.replace(/\/api\/?$/, "");
+
+  if (
+    image.startsWith("http://localhost:5000") ||
+    image.startsWith("https://localhost:5000")
+  ) {
+    return image.replace(
+      /^https?:\/\/localhost:5000/,
+      serverUrl
+    );
+  }
+
+  if (image.startsWith("http://") || image.startsWith("https://")) {
+    return image;
+  }
 
   return `${serverUrl}${image.startsWith("/") ? "" : "/"}${image}`;
 };
