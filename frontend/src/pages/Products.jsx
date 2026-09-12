@@ -17,10 +17,13 @@ const getImageUrl = (image) => {
   if (image.startsWith("http://") || image.startsWith("https://")) {
     return image;
   }
+ const baseUrl =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
-  return `http://localhost:5000${image.startsWith("/") ? "" : "/"}${image}`;
+  const serverUrl = baseUrl.replace(/\/api\/?$/, "");
+
+  return `${serverUrl}${image.startsWith("/") ? "" : "/"}${image}`;
 };
-
 const formatPrice = (price) => {
   return new Intl.NumberFormat("fr-FR").format(price || 0) + " FCFA";
 };

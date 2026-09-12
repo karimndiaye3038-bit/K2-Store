@@ -9,7 +9,12 @@ const getImageUrl = (image) => {
     return image;
   }
 
-  return `http://localhost:5000${image}`;
+ const baseUrl =
+    import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
+  const serverUrl = baseUrl.replace(/\/api\/?$/, "");
+
+  return `${serverUrl}${image}`;
 };
 
 const Categories = () => {
